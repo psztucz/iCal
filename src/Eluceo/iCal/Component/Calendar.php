@@ -102,6 +102,8 @@ class Calendar extends Component
      */
     protected $publishedTTL = 'P1W';
 
+    protected $renderVersion = true;
+
     public function __construct($prodId)
     {
         if (empty($prodId)) {
@@ -215,13 +217,23 @@ class Calendar extends Component
         return $this;
     }
 
+    public function setRenderVersion($v)
+    {
+        $this->renderVersion = $v;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildPropertyBag()
     {
         $propertyBag = new PropertyBag();
-        $propertyBag->set('VERSION', '2.0');
+        if($this->renderVersion){
+            $propertyBag->set('VERSION', '2.0');
+        }
+
         $propertyBag->set('PRODID', $this->prodId);
 
         if ($this->method) {
